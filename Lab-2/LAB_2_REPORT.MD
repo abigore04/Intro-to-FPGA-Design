@@ -7,7 +7,9 @@ Before we jump into the code and simulation, it will be useful to have some back
 
 ## Multiplexer 
 - Multiplexer is a digital circuit which allows to select one input from many of other existing inputs and send it to the single output, based on a Control Signals' parameters, which act as switches.
-![[Pasted image 20251016081717.png]]
+
+![image](Pasted%20image%2020251016081717.png)
+
 - For instance, in 4x1 MUX we have 4 inputs, 2 Select lines (control), and 1 output:
 	- When S=00, Y = I0
 	- When S=01, Y = I1
@@ -31,7 +33,8 @@ Now, having enough background, we can move to the review of our Verilog codes of
 ## Multiplexer
 
 - First, we will focus on the 4 to 1 MUX code, I will explain the logic here chunk-by-chunk, going into the details, so anybody could grasp the logic.
-![[Pasted image 20251016110114.png]]
+
+![image](Pasted%20image%2020251016110114.png)
 
 ```verilog 
 module mux4to1(
@@ -78,11 +81,12 @@ endmodule
 
 - When we compile that code in Quartus Prime and run RTL Simulation, we can see the following:
 
-![[Pasted image 20251016115054.png]]
+![image](Pasted%20image%2020251016115054.png)
 
 ### Multiplexer's Testbench Code
 
-![[Pasted image 20251016113910.png]]
+![image](Pasted%20image%2020251016113910.png)
+
 - The simulation time settings are specified in the very first line of the code. The time unit is 1ns, nanoseconds, which indicates how long the simulation should wait after "#n" is triggered. The precision is 1 ps, picoseconds; in other words, the simulation tracks the code to an accuracy of 1 ps.  
 - The test bench module is then declared and given the name `tb_mux4to1` (and the file we name correspondingly)
 - We initialize our variables in the next three lines. Our data and selection inputs are register arrays, and our output is a wire. A wire is required to track progress with the waveforms that will be covered in more detail in the results section, but it does not explicitly store any value. Registers are usually used for storage.
@@ -94,7 +98,7 @@ endmodule
 
 ### Running Testbench and Observing Waveforms.
 
-![[Pasted image 20251016120003.png]]
+![image](Pasted%20image%2020251016120003.png)
 
 Here the ModelSim waveform provides us with a visual verification of the functionality of `mux4to1` module. The simulation executes the testbench code, which applies a series of predefined inputs and allows us to observe the corresponding output over time. The key signals displayed are the 4-bit data input `data_in`, the 2-bit select line `sel`, and the single-bit output `y_out`. Each change in the inputs occurs at 10 nanosecond intervals, as specified by the `#10` delay in the testbench code.
 
@@ -116,7 +120,9 @@ This pattern continues for all test cases. The testbench was cleverly designed s
 
 
 ## Decoder
-![[Pasted image 20251016123841.png]]
+
+![image](Pasted%20image%2020251016123841.png)
+
 - here the logic is essentially the same as in MUX. We:
 	- declare new module `decoder`
 	- declare input `A` as an array and output reg as `D`.
@@ -125,15 +131,18 @@ This pattern continues for all test cases. The testbench was cleverly designed s
 	- by `default` we simply avoid the issue when the output is undefined, returning 0000.
 
 - RTL simulation design:
-![[Pasted image 20251016124552.png]]
+
+![image](Pasted%20image%2020251016124552.png)
+
 ### Decoder's Testbench Code
-![[Pasted image 20251016124330.png]]
+
+![image](Pasted%20image%2020251016124330.png)
 
 - Logic here is mostly the same as in MUX, no need to explain.
 
 ### Running Testbench and Observing Waveforms.
 
-![[Pasted image 20251016125830.png]]
+![image](Pasted%20image%2020251016125830.png)
 
 The new red waves are one exception to the same idea. According to the fifth and final test in our test bench code, the red lines in this case indicate an unknown input. Because of the default output parameters that were specified in our main decoder code, it seems that the dut has no trouble handling unknown input. The output is just set to 0000 by the dut.
 
