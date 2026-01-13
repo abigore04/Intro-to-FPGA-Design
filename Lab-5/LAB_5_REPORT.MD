@@ -6,7 +6,7 @@ The goal of the lab is to reflect on a bit sequence given to the FPGA board usin
 
 As it was stated earlier, 1011 is the desired sequence. Let’s see what the diagram for Moore’s state machine for this exact sequence looks like on paper:
 
-![[Pasted image 20260113190458.png]]
+![image](Pasted%20image%2020260113190458.png)
 
 The graph above shows that the states change from S0 to S4 as long as the sequence changes from 1 to 0 to 1 to 1. The output is zero on any change of the state except for transition S3->S4 where the sequence 1011 requirements are fulfilled. This is where our LED shows up indicating success
 
@@ -14,7 +14,7 @@ The graph above shows that the states change from S0 to S4 as long as the sequen
 
 Main code is carefully explained in the texted version after the screenshot:
 
-![[Pasted image 20260113190512.png]]
+![image](Pasted%20image%2020260113190512.png)
 
 ```verilog
 // Declaring the module
@@ -141,14 +141,15 @@ endmodule
 
 Waveform:
 
-![[Pasted image 20260113190623.png]]
-![[Pasted image 20260113190629.png]]
+![image](Pasted%20image%2020260113190623.png)
+
+![image](Pasted%20image%2020260113190629.png)
 
 If the waveform is examined carefully it is clear that it is divided into three parts with a 2 clock cycles gap: the first sequence that does not show signs of the desired sequence, hence the 0 output (LED is off), the second and third sequences that have one and two 1011 detected respectively. Moreover, with each clock cycle waveform shows the updates in the state number.
 
 The decoder:
 
-![[Pasted image 20260113190647.png]]
+![image](Pasted%20image%2020260113190647.png)
 
 Just like any other BCD to 7 segment decoder that we implemented in the previous lab, this one converts inputs to the corresponding configuration of segments on a display on the FPGA board.
 
@@ -228,4 +229,4 @@ After understanding the Moore FSM behavior, we implement the same logic in Veril
 
 In the 5th lab we used Verilog with Quartus prime tool to simulate the Moore’s state machine for sequence 1011. We used KEY1 as a serial input to generate the sequence of bits based on which FPGA display outputs the number of states in the state machine and reset button to reset the states showed on a display. An LED emits light if our sequence is detected. Every process is governed by the clock on its positive edge.
 
-*Note: This Lab was done in Collaboration with my teammate, Said Ahadov, so the link to the video leads to his YouTube channel
+- **Note: This Lab was done in Collaboration with my teammate, Said Ahadov, so the link to the video leads to his YouTube channel**
