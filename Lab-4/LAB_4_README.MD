@@ -18,12 +18,13 @@ In this lab, for the first time, we can observe the fusion of conventional Combi
 
 In my code, which will be discussed later, I have implemented 3-bit UP Counter, which switches its states only on the positive rise of the clock. In the module, responsible for counter, I have specified `always @(posedge clk or posedge reset)`, which, as far as I figured out, refers to the D flip-flops. Below, the schematics of 3-bit UP counter using three D FFs can be observed with the waveforms showing the output of the counter during each clock cycle, triggered by positive edge:
 
-![[Pasted image 20251204091106.png]]
-![[Pasted image 20251203235337.png]]
+![image](Pasted%20image%2020251204091106.png)
+
+![image](Pasted%20image%2020251203235337.png)
 
 By observing those images we can see that $Q_0$ corresponds to the rightmost digit and $Q_2$ to the leftmost. This can be seen more clearly if we take a look at the table below:
 
-![[Pasted image 20251203235616.png]]
+![image](Pasted%20image%2020251203235616.png)
 
 As mention before, the counter in this Lab has 2 control signals:
 1. Enable - to allow counting only while pressed.
@@ -32,8 +33,10 @@ As mention before, the counter in this Lab has 2 control signals:
 ### 1.2 BCD to 7-segment Decoder
 
 We have discussed the concepts related to this in previous Lab report. Shortly, the aim is to design a truth table corresponding to the segments of the display, which has the segments named by letters from A to G and DP:
-![[Pasted image 20251106214108.png]]
-![[Pasted image 20251106213647.png]]
+
+![image](Pasted%20image%2020251106214108.png)
+
+![image](Pasted%20image%2020251106213647.png)
 
 - Depending on the 4-bit input the following decimal digits will be displayed:
 	- 0 in binary is 0000 (for this, all segments should be high, except G)
@@ -49,12 +52,13 @@ Although, this time, instead of 4 bits, we have input of 3 bits, resulted from 3
 |1|001|0001|
 |5|101|0101|
 |7|111|0111|
+
 This will be done in top module, where we will "glue" two modules (counter and decoder) together to achieve desired functionality.
 ## 2. Verilog Implementation
 
 ### 2.1 3-Bit Counter Module
 
-![[Screenshot 2025-12-03 203210.png]]
+![image](Screenshot%202025-12-03%20203210.png]]
 
 This module is responsible for realization of 3-bit up counter functionality which will generate slow tick (frequency by which the counting happens), counting itself, reset and enable control.
 
@@ -122,7 +126,8 @@ module _3bit_countr #(
 ```
 
 ### 2.2 3-Bit Counter Testbench Module
-![[Screenshot 2025-12-03 203217.png]]
+
+![image](Screenshot%202025-12-03%20203217.png]]
 
 by the following testbench our goal is to define if reset zeros the counter, enable allows count only when high, counter increments periodically, counter holds value when enable is released, counter cycles after 7 going back to 0.
 
@@ -195,7 +200,7 @@ Waveforms resulted during testbench will be observed in Results.
 
 In this module we convert 4-bit BCD digit into 8-bit pattern controlling display. (here we use conventional BCD with 4-bit input. Although we have 3-bit input, as mentioned previously, we will consider this in our top module, which will act as a connector between counter and decoder modules)
 
-![[Screenshot 2025-12-03 203225.png]]
+![image](Screenshot%202025-12-03%20203225.png)
 
 On our board we use a common-anode display, which means that segment turns ON when line is 0 and vice versa; so, the bits of the output correspond to `seg_pattern = {DP, G, F, E, D, C, B, A}`
 
@@ -273,13 +278,14 @@ endmodule
 # Results & Analysis
 
 After writing all codes necessary for the Lab and compiling them in Quartus prime making sure that we have no errors, next step is to move to ModelSim and observe waveforms resulted out of TB code:
-![[Screenshot 2025-12-03 203424.png]]
+
+![image](Screenshot%202025-12-03%20203424.png)
 
 After making sure that waveforms correspond to the scenarios coded in testbench, we can return to Quartus prime and work on pin assignment.
 
 Before doing pin assignment, it is important not to forget about setting top module file as top in hierarchy of the project. After that, we should compile once again, and finally, can open Pin Planner tool of Quartus, where, thanks to our top module code, we can see all the Node names ready to be assigned to actual board pins. Relying on the manual in documentation of our Cyclone IV, we can confidently assign correct Location. Also, it is important to set I/O standard as 3.3V, due to our board requirements.  
 
-![[Screenshot 2025-12-03 203435.png]]
+![image](Screenshot%202025-12-03%20203435.png)
 
 Finally, we can close pin planner and connect our board physically to PC, then open Programmer tool and start programming the board. After a successful finish of programming, we can finally make sure that we have done everything correctly.
 
