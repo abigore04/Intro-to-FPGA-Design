@@ -6,10 +6,11 @@
 
 - We can see in the picture below, the truth table for 7-segment display, displaying decimal digits (0-9): 
 
-![[Pasted image 20251106213647.png]]
+![image](Pasted%20image%2020251106213647.png)
 
 - We can construct this table knowing the pins for each segment of the display, as depicted in that image:
-![[Pasted image 20251106214108.png]]
+
+![image](Pasted%20image%2020251106214108.png)
 
 - Well, we will show digits 0, 1, 2, 3, ..., 9:
 	- 0 in binary is 0000 (for this, all segments should be high, except G)
@@ -24,12 +25,8 @@
 - When we talk about 7-segment display, the first thing that should come to our mind is a decoder. Having ready truth table we can construct our decoder. We know that for n input lines of a decoder, we can get up to 2^n output lines; however here we just need 10 outputs, to display 10 digits (0-9). 
 
 - Now we can construct simulate our decoder behavior using Verilog coding (explained using comments in code block):
-![[Pasted image 20251106215834.png]]
 
-
-
-
-
+![image](Pasted%20image%2020251106215834.png)
 
 ```verilog
 module seven_segment_for_FPGA(
@@ -61,17 +58,17 @@ endmodule
 
 - After that we have to make sure that our code runs correctly, therefore, write testbench code with desired inputs:
 
-![[Pasted image 20251106215734.png]]
+![image](Pasted%20image%2020251106215734.png)
 
 - and verify it looking at the waveform we got:
 
-![[Pasted image 20251106215913.png]]
+![image](Pasted%20image%2020251106215913.png)
 
 - Next, we can write the "top.v" code to define all our desired input and output pins in a Pin Planner and then assign them correctly relying on a table from Cyclone IV documentation. We have 4 buttons: RESET, KEY1, KEY2, KEY3, which we also specified in top code, and using which we will control the output on the board. Here, also, we have specified on which display our digits will be displayed (on the leftmost). And it is important to specify the top.v code as a top level code in our project, as the name and the functionality suggest.  
 
-![[Pasted image 20251106220553.png]]
+![image](Pasted%20image%2020251106220553.png)
 
-![[Pasted image 20251106220610.png]]
+![image](Pasted%20image%2020251106220610.png)
 
 - In location column we specify correct pin names for each input/output, again, according to the documentation table (and specify 3.3V - for this model of board it is required).
 
