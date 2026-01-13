@@ -10,11 +10,9 @@ The objective of our final lab is to implement vending machine on FPGA board usi
 
 To implement vending machine, FSM principles similar to those utilized in the previous lab will be used. Even so, with the extended number of states and more complex functionality FSM becomes much more sophisticated. In the table below, overall process is carefully outlined:
 
-![[Pasted image 20260113194501.png]]
+![image](Pasted%20image%2020260113194501.png)
 
 All the possible states are divided into several sections. Two big boxes represent two different conditions: first box + S0 state is where a user is allowed to insert a coin with a given range of values, second box + S45 state is where the machine is forced to vend. As you might have already guessed, numbers in front of letter S in states S0-S65 represent all possible configurations our vending machine can allow – they are all multiples of 5 since any of possible coin input is a multiple of 5. For visual representativeness, nickel input arrow is signified with a dot at the tip, dime input - with a rectangular shape and a quarter input – with a basic arrow (note: for non-input transitions the arrow is filled unlike the quarter input one to avoid confusion).
-
-(HERE MUST BE AN IMAGE)
 
 1) Starting from S0 we begin to insert coins  
 2) We continue to insert coins as long as tracked amount does not exceed 40¢ (reminder: our drink costs 45¢). If at any point along the process we press the reset button, our machine goes to the refund state that displays the amount to refund, which is total inserted amount, and heads back to S0  
@@ -52,7 +50,7 @@ Here we will share all the codes and strive to explain it line by line with all 
 
 ## Debounce pulse.
 
-![[Pasted image 20260113194526.png]]
+![image](Pasted%20image%2020260113194526.png)
 
 Lines 1-4:  
 This is module initialization. CLK_HZ = 50_000_000 represents our sistem clock to 50MHz which is the default value. DEBOUNCE_MS = 20 is the threshold for debouncing that was discussed in the previous section of the report.
@@ -89,7 +87,7 @@ Assign old stable value to the new stable value from the same clock cycle. If th
 
 ## Binary to 7-segment.
 
-![[Pasted image 20260113194543.png]]
+![image](Pasted%20image%2020260113194543.png)
 
 Lines 1-10:  
 Our constants are system clock with the default value and scan. As we discussed in the “Background section of the report, due to displays connecting through single line we need to constantly switch between them with high frequency. Scan is exactly this frequency.  
@@ -109,7 +107,7 @@ Representing our value in terms of tens and ones for proper displaying. Refer to
 Lines 36-38:  
 This is a clock divider. It is, basically, how many clock cycles we need to overcome to switch to a different display. divcnt is a counter that operates just like one in the debounce pulse code. scan is a switch – a toggle that decides what display we need to switch to.
 
-![[Pasted image 20260113194559.png]]
+![image](Pasted%20image%2020260113194559.png)
 
 Lines 41-53:  
 This is where we toggle scan. If reset is 1 we set everything to 0. Otherwise count up to DIV and then invert scan (0->1 or 1->0).
@@ -119,7 +117,7 @@ This is where we display our number. If scan is equal to 0 we display first disp
 
 ## Main FSM implementation.
 
-![[Pasted image 20260113194611.png]]
+![image](Pasted%20image%2020260113194611.png)
 
 Lines 1-18:  
 Module initialization. From top to bottom constant values are:  
@@ -134,7 +132,7 @@ All possible FSM states as well as registered current state and next state. Use 
 Lines 31-53:  
 A function that converts the state to the amount of money it represents.
 
-![[Pasted image 20260113194622.png]]
+![image](Pasted%20image%2020260113194622.png)
 
 Lines 56-77:  
 A function that returns the state after coin addition. First, it converts current state to amount and adds an inserted coin to it. Then, it returns resulting amount as a corresponding state.
@@ -145,7 +143,7 @@ Similar to the pulse debounce code, it computes the number of clock cycles requi
 Lines 88-91:  
 latched_total is used as a storage not to lose the value after we enter vending or refund. cur_amount simply converts the amount we have to the corresponding state. Finally, cur_change, returns difference between the amount we inserted and the actual value if a user overpayed and 0 otherwise.
 
-![[Pasted image 20260113194636.png]]
+![image](Pasted%20image%2020260113194636.png)
 
 Lines 94-142:  
 State transition logic. If the program is not enabled, next state is always S0. Otherwise, state transition is executed as follows:  
@@ -154,14 +152,14 @@ State transition logic. If the program is not enabled, next state is always S0. 
 3) If total inserted amount reaches or exceeds the price we go to vending state  
 4) For the rest of the states we wait untill the timer runs out so we can notice the changes. If during the vending state change is 0, we go back to S0, and we go to change state otherwise. Change state displays the change to be returned to a user before going back to S0. Same applies for refund state that displays refunded amount that just happens to be exactly inserted amount  
 
-![[Pasted image 20260113194647.png]]
+![image](Pasted%20image%2020260113194647.png)
 
 Lines 145-172:  
 Actions to be performed on positive edge of the clock cycle. First, if we reset, all parameters are being reset.  
 Next in the always block come three timers for vended amount, change and refunded amount, respectively. They are used to display the desired value after we hit the price point and operate in the same way as a timer in debounce pulse code.  
 After the timer comes the latch. If in the next state we hit the price point we the store the value of this next state. If we press cancel and want a refund, on the other hand, we store current amount.
 
-![[Pasted image 20260113194659.png]]
+![image](Pasted%20image%2020260113194659.png)
 
 Lines 175-214:  
 The outputs produced in the process. Initially we set all the outputs to 0. Then:  
@@ -173,7 +171,7 @@ The outputs produced in the process. Initially we set all the outputs to 0. Then
 
 ## Testbench.
 
-![[Pasted image 20260113194711.png]]
+![image](Pasted%20image%2020260113194711.png)
 
 Lines 1-12:  
 Nothing special. We just initialize a module and all the necessary input and output parameters. They match all the parameter in the DUT that will be instantiated later and were discussed previously in main FSM code.
@@ -191,7 +189,7 @@ Each line is a separate task for each type of coin input we have. For instance r
 3) On the next negative edge set p5 to 0  
 This mimics coin insertion and cancel behaviour
 
-![[Pasted image 20260113194727.png]]
+![image](Pasted%20image%2020260113194727.png)
 
 Lines 43-75:  
 An actual test. We start from enable=0 and reset=1, wait for 2 clock cycles, set reset to 0, wait for 2 more clock cycles, set enable to 1 and the tests begin. We cover four scenarios:  
@@ -205,7 +203,7 @@ We wait for to clock cycles inbetween inserting coings and 12-16 clock cycles in
 
 The results of the testbench may be observed in the waveform. Output were satisfying for given inputs, FSM logic flawlessly produced all the desired results.
 
-![[Pasted image 20260113194736.png]]
+![image](Pasted%20image%2020260113194736.png)
 
 ## Top.
 
@@ -214,13 +212,13 @@ With the top module everything is straightforward:
 2) We create separate DUT for each functionality (notice how there is a separate DUT for each of four input buttons we will have)  
 3) We assign LEDs to corresponding output states (collect and dispense)  
 
-![[Pasted image 20260113194748.png]]
+![image](Pasted%20image%2020260113194748.png)
 
 ## Pin Planner.
 
 Here we do everything according to documentation.
 
-![[Pasted image 20260113194758.png]]
+![image](Pasted%20image%2020260113194758.png)
 
 ## YouTube link.
 
