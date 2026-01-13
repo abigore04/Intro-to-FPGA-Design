@@ -14,6 +14,7 @@ To represent both the Half-Adder and Full-Adder in a form of a circuit of logic 
 | 0   | 1   | 0     | 1   |
 | 1   | 0   | 0     | 1   |
 | 1   | 1   | 1     | 0   |
+
 above, I have constructed truth table based on basic Boolean algebra properties, and here it is clear that we have output carry only when both summands are 1.
 
 Now we can easily express the logic, using minterms or Maxterms. Considering carry, it is more rational to use minterms, as we have '1' only once, therefore less logic gates will be involved in a circuit, making it cost-efficient. And considering sum results, it is does not matter which to choose, since we have equal numbers of 0's and 1's, but I will focus on minterms, since I have used them in a carry representation.
@@ -33,7 +34,7 @@ In the second 1, B is 0, and we negate it this time (and 10 = 2), m2 = AB'
 **Sum = A⨁B**
 
 For manual visual representation, we can create a circuit in Logisim:
-![[Pasted image 20250930194036.png]]
+!(Pasted%20image%2020250930194036.png)
 
 So, basically, that it. Now it is easy to draw a circuit manually or represent it in Quartus Prime using Verilog as we understood the logic behind it, which is basically the aim of this lab. I will come to this point very soon.
 
@@ -50,6 +51,7 @@ When we come to the Full-Adder, here we start with the truth table as well, intr
 | 1   | 0   | 1    | 1     | 0   |
 | 1   | 1   | 0    | 1     | 0   |
 | 1   | 1   | 1    | 1     | 1   |
+
 In C-out we can focus on either minterms or Maxterms, and in Sum as well, therefore I will focus on minterms.
 
 1. So,  for C-out:
@@ -59,18 +61,18 @@ C-out = m3+m5+m6+m7 = A'BC+AB'C+ABC'+ABC = (A'B+AB')C + AB(C'+C) = **(A⨁B)C + 
 Sum = m1+m2+m4+m7 = A'B'C+A'BC'+AB'C'+ABC = B'(A'C+AC') + B(A'C'+AC) = B'(A⨁C) + B(A⨁C)' = (B⨁(A⨁C)) = A⨁B⨁C = **(A⨁B)⨁C**
 
 So, in Logisim we get something like that:
-![[Pasted image 20250930195359.png]]
+!(Pasted%20image%2020250930195359.png)
 
 and if we look closer, we can see there the familiar pattern - two Half-Adder, continued by OR gate:
 
-![[Screenshot 2025-09-30 195802_updated.png]]
+!(Screenshot%202025-09-30%20195802_updated.png)
 
 Now, having all this knowledge, we finally can move to visualization of the discussed Adders in Quartus Prime, using Verilog.
 
 ### Results
 ##### *Half Adder in Quartus Prime*
 
-![[Pasted image 20251002134355.png]]
+!(Pasted%20image%2020251002134355.png)
 
 Here is the code for Half-Adder:
 ```Verilog title:"Half_Adder"
@@ -95,9 +97,9 @@ First, I will walk through the code, trying to explain the "language" itself.
 
 ##### *Full Adder in Quartus Prime*
 
-![[Pasted image 20251002134420.png]]
+!(Pasted%20image%2020251002134420.png)
 
-![[Pasted image 20251002134449.png]]
+!(Pasted%20image%2020251002134449.png)
 
 As we saw earlier, it is possible to construct the **Full-Adder** by combining **two Half-Adders and an OR gate**, making it possible to add three binary inputs (`a`, `b`, and `c_in`) and produce both a `sum` and a `carry-out`.
 
