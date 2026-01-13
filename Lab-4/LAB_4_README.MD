@@ -58,7 +58,7 @@ This will be done in top module, where we will "glue" two modules (counter and d
 
 ### 2.1 3-Bit Counter Module
 
-![image](Screenshot%202025-12-03%20203210.png]]
+![image](Screenshot%202025-12-03%20203210.png)
 
 This module is responsible for realization of 3-bit up counter functionality which will generate slow tick (frequency by which the counting happens), counting itself, reset and enable control.
 
