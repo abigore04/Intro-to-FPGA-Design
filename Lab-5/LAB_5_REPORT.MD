@@ -226,4 +226,6 @@ After understanding the Moore FSM behavior, we implement the same logic in Veril
 
 # Conclusion
 
-In the 5th lab we used Verilog with Quartus prime tool to simulate the Moore’s state machine for sequence 1011. We used KEY1 as a serial input to generate the sequence of bits based on which FPGA display outputs the number of states in the state machine and reset button to reset the states showed on a display. An LED emits light if
+In the 5th lab we used Verilog with Quartus prime tool to simulate the Moore’s state machine for sequence 1011. We used KEY1 as a serial input to generate the sequence of bits based on which FPGA display outputs the number of states in the state machine and reset button to reset the states showed on a display. An LED emits light if our sequence is detected. Every process is governed by the clock on its positive edge.
+
+*Note: This Lab was done in Collaboration with my teammate, Said Ahadov, so the link to the video leads to his YouTube channel
