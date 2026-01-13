@@ -1,5 +1,3 @@
-**Note**: due to the lack of PCs available in classroom, I had to share the work with Said Ahadov; therefore, our code and snap shots taken are similar.
-
 ### Objective
 
 The objective of our lab was to write the Verilog code in Quartus Prime software and let it design the representation of two circuits, which are **Half-Adder** and **Full-Adder**. What distinguishes those two Adders from each other is that Half-Adder basically adds two one-bit inputs and gives the results in a form of sum and carry, while Full-Adder allows us to introduce the third input in a form of input-carry and have three 1-bit inputs, resulting in 2 outputs - sum and output-carry. In this report I will walk through all the fundamental knowledge required to accomplish this task.
