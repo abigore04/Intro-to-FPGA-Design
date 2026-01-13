@@ -127,7 +127,7 @@ module _3bit_countr #(
 
 ### 2.2 3-Bit Counter Testbench Module
 
-![image](Screenshot%202025-12-03%20203217.png]]
+![image](Screenshot%202025-12-03%20203217.png)
 
 by the following testbench our goal is to define if reset zeros the counter, enable allows count only when high, counter increments periodically, counter holds value when enable is released, counter cycles after 7 going back to 0.
 
